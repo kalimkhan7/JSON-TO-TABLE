@@ -8,21 +8,22 @@
     <title>Create table from JSON</title>
 </head>
 <body>
-    <h1>JSON to TABULAR</h1>
-    <input type="text" id="input" onkeyup="search()" placeholder="Search for Employee names..">
-    <div id = "showData">
-        <table id = "mytable">
+    <div class="container">
+            <h1>JSON to TABULAR</h1>
+            <input type="text" id="input" onkeyup="search()" placeholder="Search for Employee names..">
+                <div id = "showData">
+                <table>
+                    
+                </table>
+            </div>
+        
             
-        </table>
+            <a href="javascript:previousPage()" id="btnPrev">Prev</a>
+            <a href="javascript:nextPage()" id="btnNext">Next</a>
+            page: <span id="page"></span>
+
     </div>
-
     
-    <a href="javascript:previousPage()" id="btn_prev">Prev</a>
-    <a href="javascript:nextPage()" id="btn_next">Next</a>
-    page: <span id="page"></span>
-
-
-    <!-- <script src="pagination.js"></script> -->
     <script src="task4.js"></script>
 </body>
 </html>

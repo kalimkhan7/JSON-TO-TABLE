@@ -529,6 +529,11 @@
     ]
 
 var data =  generateId(JSONdata);
+
+/**
+ * This function takes the array provides and return a new array with Unique id's.
+ * @param {Array} arr - Array of the Data provided
+ */
 function generateId(arr){
     index = 1;
     var data = [];
@@ -541,20 +546,26 @@ function generateId(arr){
     return data;
 }
 
+/**
+ * on Load it invokes the two main functions for creating the table
+ */
 window.onload = function() {
     createHeader(tableHeader);
-    changePage(1);
+    loadTable(1);
 };
 
 var tableHeader = Object.keys(data[0]);
 var table = document.querySelector("table");
 var tbody = table.createTBody();
-
+/**
+ * Creates the Header of the table and fill the heading in it.
+ * @param {Array} arr - Array of Headings of the table
+ */
 function createHeader(arr){
     var thead = table.createTHead();
     var row = thead.insertRow();
 
-    for (let element of tableHeader) {
+    for (let element of arr) {
         let th = document.createElement("th");
         let text = element.charAt(0).toUpperCase() + element.replace(/_/g, " ").slice(1);
         th.innerText = text;
@@ -565,41 +576,56 @@ function createHeader(arr){
 var currentPage = 1;
 var recordsPerPage  = 10;
 
+/**
+ * to go to the previous page
+ */
 function previousPage(){
     if(currentPage > 1){
         currentPage--;
-        changePage(currentPage);
+        loadTable(currentPage);
     }
 }
 
+/**
+ * to go to the next page
+ */
 function nextPage(){
    
     if(currentPage < numberOfPages()){
         currentPage++;
-        changePage(currentPage);
+        loadTable(currentPage);
         
     }
 }
 
 var isSearched = false;
 
-function changePage(page){
+/**
+ * if searched this function excutes CreateTable function with Array of Searched Results.
+ * if not searched this function excutes CreateTable function with Array of Original Data. 
+ * @param {number} page - current Page of th table
+ */
+function loadTable(page){
     var page_span = document.getElementById("page");
     page_span.innerHTML = page + "/" + numberOfPages();
 
     if(isSearched){
         createTable(searchResult,page);
-        toggle(searchResult,page);
+        showAndHideButtons(searchResult,page);
     } else {
         createTable(data,page);
-        toggle(data,page);
+        showAndHideButtons(data,page);
     }  
 }
 
-
-function toggle(arr,page){
-    var btnNext = document.getElementById("btn_next");
-    var btnPrevious = document.getElementById("btn_prev");
+/**
+ * Shows or Hides the Pagination Buttons according to the conditions specified.
+ * @param {Array} arr - Array of Searched result or Array of Original Data.
+ * @param {number} page - Current Page
+ */
+function showAndHideButtons(arr,page){
+    var btnNext = document.getElementById("btnNext");
+    var btnPrevious = document.getElementById("btnPrev");
 
     if(arr.length <= recordsPerPage ) {
         btnNext.style.visibility = "hidden";
@@ -617,6 +643,9 @@ function toggle(arr,page){
 }
 var searchResult = [];
 
+/**
+ * Searches through the data and invokes the createTable function to create the table with Search results.
+ */
 function search(){
     searchResult = [];
     var input = document.getElementById("input");
@@ -631,13 +660,15 @@ function search(){
             page_span.innerHTML = currentPage + "/" + numberOfPages();
             currentPage = 1;
             createTable(searchResult,currentPage);
-            toggle(searchResult,currentPage);
+            showAndHideButtons(searchResult,currentPage);
         }
     }
 }
 
 
-
+/**
+ * Calculates the number of pages to be Displayed according to the records to be shown per page.
+ */
 function numberOfPages()
 {
     if(isSearched){
@@ -647,7 +678,11 @@ function numberOfPages()
     }
     
 }
-
+ /**
+  * Creates the table with the Searched results or the original data.
+  * @param {Array} arr - Array of Searched results or Original data.
+  * @param {number} page - Current Page.
+  */
 function createTable(arr, page){
     tbody.innerHTML = "";      
     for (let i=(page-1)*recordsPerPage; i < page*recordsPerPage;i++) {
