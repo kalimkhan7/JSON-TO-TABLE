@@ -539,7 +539,6 @@ function generateId(arr){
     var data = [];
     for(let object of arr){
         object.id = index;
-        
         data.push(object)
         index++;
     }
@@ -606,8 +605,8 @@ var isSearched = false;
  * @param {number} page - current Page of th table
  */
 function loadTable(page){
-    var page_span = document.getElementById("page");
-    page_span.innerHTML = page + "/" + numberOfPages();
+    var pageSpan = document.getElementById("page");
+    pageSpan.innerHTML = page + "/" + numberOfPages();
 
     if(isSearched){
         createTable(searchResult,page);
@@ -650,14 +649,14 @@ function search(){
     searchResult = [];
     var input = document.getElementById("input");
     var filter = input.value.toUpperCase();
-    var page_span = document.getElementById("page");
+    var pageSpan = document.getElementById("page");
    
     for(var i = 0; i < data.length; i++){
                 
         if(data[i].employee_name.toUpperCase().indexOf(filter) != -1) searchResult.push(data[i]);
         if(searchResult){
             isSearched = true;
-            page_span.innerHTML = currentPage + "/" + numberOfPages();
+            pageSpan.innerHTML = currentPage + "/" + numberOfPages();
             currentPage = 1;
             createTable(searchResult,currentPage);
             showAndHideButtons(searchResult,currentPage);
